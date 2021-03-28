@@ -1,6 +1,7 @@
 typedef int bool;
 enum { false, true};
 
+/*Función que implementa el algoritmo de ordenamiento de burbuja*/
 void burbuja (int * arreglo){
     int i = 0;
     bool permutacion = true;
@@ -23,6 +24,7 @@ void burbuja (int * arreglo){
     }
 }
 
+/*Función que implementa el algoritmo de ordenamiento de burbuja bidireccional*/
 void burbujaBidireccional (int * arreglo){
     bool permutacion;
     int actual = 0, direccion = 1;
