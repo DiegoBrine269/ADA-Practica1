@@ -1,59 +1,59 @@
 typedef int bool;
 enum { false, true};
 
-/*Función que implementa el algoritmo de ordenamiento de burbuja*/
-void burbuja (int * arreglo){
-    int i = 0;
-    bool permutacion = true;
-    bool actual;
+/*Función que implementa el algoritmo de ordenamiento de burbuja, (ya funciona)*/
+void burbuja (long int * arreglo, int longitud){
+    int i;
+    int j;
+    int aux_elem;
+    int movimientos;
 
-    while(permutacion){
-        permutacion = false;
-        i++;
+    movimientos = 0;
 
-        for(actual=0; actual < 20-i; actual++){
-            if(arreglo[actual] > arreglo[actual+1]){
-                permutacion = true;
-
-                //Intercambio
-                int temp = arreglo[actual];
-                arreglo[actual] = arreglo[actual+1];
-                arreglo[actual+1] = temp;
+    for (int i = 0; i < longitud - 1; i++)
+    {
+        for (j = 1; j < longitud; j++)
+        {
+            if (arreglo[j] < arreglo[j-1])
+            {   // si el elemento anterior es mayor, hacemos el cambio
+                aux_elem = arreglo[j];
+                arreglo[j] = arreglo[j-1];
+                arreglo[j-1] = aux_elem;
+                movimientos++;
             }
-        }    
+        }
     }
 }
 
-/*Función que implementa el algoritmo de ordenamiento de burbuja bidireccional*/
-void burbujaBidireccional (int * arreglo){
-    bool permutacion;
-    int actual = 0, direccion = 1;
-    int comienzo = 1, fin = sizeof(arreglo); 
 
-    do{
-        permutacion = false;
-        while(((direccion == 1) && (actual < fin)) || ((direccion == 1) && (actual > comienzo))){
+
+/*Función que implementa el algoritmo de ordenamiento de burbuja bidireccional (ya funciona)*/
+void burbujaBidireccional (long int * arreglo, int longitud){
+    bool permutation;
+    int actual=0, direccion=1;
+    int comienzo=1, fin=longitud;
+    do {
+        permutation=false;
+        while (((direccion==1) && (actual<fin)) || ((direccion==-1) && (actual>comienzo))) {
             actual += direccion;
-
-            if(arreglo[actual] < arreglo[actual-1]){
-                int temp = arreglo[actual-1];
-                arreglo[actual] = arreglo[actual-1];
-                arreglo[actual-1] = temp;
-                permutacion = true;
-            }   
+            if (arreglo[actual]<arreglo[actual-1]) {
+                int temp = arreglo[actual];
+                arreglo[actual]=arreglo[actual-1];
+                arreglo[actual-1]=temp;
+                permutation=true;
+            }
         }
-
-        direccion == 1? fin-- : comienzo++;
+        if (direccion==1) fin--; else comienzo++;
         direccion = -direccion;
-    }while(permutacion);
+    } while (permutation);
 }
 
-/*Función que implementa el algoritmo de ordenamiento de Inserción*/
-void insercion(int * t){
+/*Función que implementa el algoritmo de ordenamiento de Inserción, (ya funciona)*/
+void insercion(long int * t, int longitud){
     int i, j;
     int actual;
 
-    for(i=1; i<20; i++){
+    for(i=1; i<longitud; i++){
         actual = t[i];
         for(j = i; j > 0 && t[j-1] > actual; j--){
             t[j] = t[j-1];
@@ -63,40 +63,37 @@ void insercion(int * t){
 }
         
 
-/*Función que implementa el algoritmo de ordenamiento de Selección*/
-void seleccion(int *vector, int taille){
-    int actual, mas_pequeno, j, temp;
-
-    for(actual = 0; actual < taille-1; actual++){
-        mas_pequeno = actual;
-        for(j = actual 1; j < taille; j++){
-               if(vector[j] < vector[mas_pequeno])
-                 mas_pequeno = j;
-         temp = vector[actual];
-         vector[actual] = vector[mas_pequeno];
-         vector[mas_pequeno] = temp;
-        }
-    }    
-}
-
-
-/*Función que implementa el algoritmo de ordenamiento de Shell*/
-void tri_insercion(int *t, int gap, int debut){
-    int j, en_cours;
-
-    for(int i = gap + debut; i < 20; i+=gap){
-        en_cours = t[i];
-        for(j = i; j >= gap && t[j - gap] > en_cours; j-=gap){
-            t[j] = t[j - gap];
-        }
-        t[j] = en_cours;
+/*Función que implementa el algoritmo de ordenamiento de Selección, (ya funciona)*/
+void seleccion(long int *vector, int taille){
+  for (int i = 0; i < taille - 1; i++) {
+    for (int j = i + 1; j < taille; j++) {
+     
+      if (vector[i] > vector[j]) {
+        // ...intercambiarlos, es decir, mover el actual a la derecha y el de la derecha al actual
+        int temporal = vector[i];
+        vector[i] = vector[j];
+        vector[j] = vector[j];
+      }
     }
+  }
 }
 
-void shell(int *t){
-    int intervalles[5]={6,4,3,2,1};
-    for(int ngap=0; ngap<5; ngap++){
-        for(int i=0; i<intervalles[ngap]; i++)
-           tri_insercion(t, intervalles[ngap], i);
+
+/*Función que implementa el algoritmo de ordenamiento de Shell (ya funciona)*/
+void shell(long int *t, int longitud){
+    int i, j, intervalo, temp;
+    intervalo = longitud/2;
+
+    while (intervalo > 0) {
+    for (i=intervalo; i < longitud; i++) {
+        j = i;
+        temp = t[i];
+        while ((j >= intervalo) && (t[j - intervalo] > temp)) {
+            t[j] = t[j - intervalo];
+            j = j - intervalo;
+        }
+        t[j] = temp;
+    }
+    intervalo /= 2;
     }
 }

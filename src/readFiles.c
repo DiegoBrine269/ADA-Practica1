@@ -1,31 +1,39 @@
 #include "readFiles.h"
-#define limite 100 
 
-/*Esta función lee línea por línea la información que haya en un archivo .txt*/
-void readFile(){
-    char nombre [20];
-    FILE *archivo;
-    int numero;
-    int numeros [limite];    
-    int i=0;
+//Variable para guardar el archivo
+FILE *archivo;
 
+/*Esta función lee la información que haya en un archivo .txt y la guarda en un arreglo de enteros*/
+void readNameOfFile(char * nombre){
     printf("Ingrese el nombre del archivo (sin la extension): ");
-    
     gets(nombre);
-    archivo = fopen(strcat(nombre, ".txt"), "r");   
+}
 
+/*
+    Lee un archivo txt
+    Recibe:
+        1. Nombre del archivo a abrir
+        2. El arreglo en donde se almacenarán los números leídos
+        3. El tamaño del arreglo
+*/
+void readFile(char * nombreArchivo, long int * numeros, int LIMITE){
+    archivo = fopen(strcat(nombreArchivo, ".txt"), "r"); 
+    long int numero;   
+    int i = 0;
 
-    for(i=0; i<=limite; i++){
-        fscanf(archivo, "%d", &numero),  //Lee el número hasta encontrar un salto de línea
-        numeros[i] = numero;
-    }
+    for(int i=0; i < LIMITE; i++){
+        fscanf(archivo, "%d\n", &numero);            //Lee el número hasta encontrar un salto de línea
+        numeros[i] = numero;                         //Guarda el número en una posición del arreglo                                        
+    }                                                                                                                                                                             
+}
 
-    printf("\nEntrada:\n"); //Imprime lo que leyó
-    for(i=0; i<limite; i++){
-        printf("%d", numeros[i]);
-    }
-
-    system("pause");
-
-
+/*  Esta función imprime el arreglo
+    Recibe:
+        1. El arreglo que se quiere imprimir
+        2. El tamaño de dicho arreglo
+*/
+void printArray(long int * numeros, int LIMITE){  
+    for(int i=0; i < LIMITE; i++){
+        printf("%d\n", numeros[i]);            
+    }       
 }
